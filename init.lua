@@ -23,16 +23,18 @@ wifi.sta.connect()
 
 tmr.alarm(1, 2000, 1, function()
     if wifi.sta.getip() == nil then
-        print("IP unavailable, Waiting...")
+        print("connecting...")
     else
         tmr.stop(1)
-        print("ESP8266 mode is: " .. wifi.getmode())
-        print("The module MAC address is: " .. wifi.ap.getmac())
         print("Config done, IP is "..wifi.sta.getip())
+       
+        dofile("http_test.lua")
     end
 end)
 --]]
 
 --[
 -- call data and display update cycles
+-- Important: when calling the file, 
+-- the wifi.sta.connect routine might not be ready!
 dofile("i2C_display.lua")

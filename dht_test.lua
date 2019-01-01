@@ -1,10 +1,10 @@
 -- DHT22 Test
 dhtPin=5
 
-function readDHT22(PIN)
+function readDHT22()
    -- read data from DHT22
-   --print(PIN)
-    status, temp, humi, temp_dec, humi_dec = dht.read(PIN)
+   -- print(PIN)
+    status, temp, humi, temp_dec, humi_dec = dht.read(dhtPin)
     if status == dht.OK then
         percent='%'
         -- this only works with float firmware ...
@@ -16,9 +16,9 @@ function readDHT22(PIN)
     end
 end
 
-print(readDHT22(dhtPin))
+print(readDHT22())
 
 local t1 = tmr.create()
-t1:register(5000, tmr.ALARM_AUTO, function (t) print(readDHT22(5)) end)
+t1:register(5000, tmr.ALARM_AUTO, function (t) print(readDHT22()) end)
 t1:start()
 --tmr.alarm (1, 5000, tmr.ALARM_AUTO, function () print(readDHT22(5)) end)

@@ -71,6 +71,12 @@ function displayLoop()
   end
   disp:drawStr(10, 30, butStr)
   
+  if wifi.sta.getip() == nil then
+    disp:drawStr(10, 50, "connecting ...")
+  else
+    disp:drawStr(10, 50, string.format("IP : %s",wifi.sta.getip()))
+  end
+
   disp:sendBuffer()
 
   -- increase the state
