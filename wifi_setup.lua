@@ -12,6 +12,7 @@ wifi.sta.autoconnect(1)
 wifi.eventmon.register(wifi.eventmon.STA_DISCONNECTED, function(T)
     print("\n\tSTA - DISCONNECTED".."\n\tSSID: "..T.SSID.."\n\tBSSID: "..T.BSSID.."\n\treason: "..T.reason)
     -- stop wifi services
+    -- updateDisplay()
     end)
    
 wifi.eventmon.register(wifi.eventmon.STA_DHCP_TIMEOUT, function()
@@ -22,5 +23,5 @@ wifi.eventmon.register(wifi.eventmon.STA_DHCP_TIMEOUT, function()
 -- from here wifi depending services are possible ...
 wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
     print("\n\tSTA - GOT IP".."\n\tStation IP: "..T.IP.."\n\tSubnet mask: "..T.netmask.."\n\tGateway IP: "..T.gateway)
-    
+    -- updateDisplay()
     end)

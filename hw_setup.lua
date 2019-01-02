@@ -1,4 +1,4 @@
-- hardware definition (global IO variable)
+-- hardware definition (global IO variable)
 sdaPin = 1 -- I2C bus SDA @ PIN1
 sclPin = 2 -- I2C bus SCL @ PIN2
 ledPin = 3 -- red LED @ PIN3

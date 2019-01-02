@@ -43,7 +43,7 @@ function updateDisplay()
         disp:drawStr(10, 20, errMsg)       
     else
         disp:drawStr(10, 10, string.format("Temperatur: %.1f%sC",temperature,string.char(176)))
-        disp:drawStr(10, 20, string.format("Feuchte   : %.1f%s",humi,"%"))
+        disp:drawStr(10, 20, string.format("Feuchte   : %.1f%s",humidity,"%"))
     end
         
     if buttonPressed == 1 then
@@ -53,6 +53,12 @@ function updateDisplay()
     end
     disp:drawStr(10, 30, butStr)
     
+    if gpio.read(webPin) == 1 then
+        disp:drawStr(10, 40, "LED (gn)  : EIN")
+    else
+        disp:drawStr(10, 40, "LED (gn)  : AUS")
+    end
+
     if wifi.sta.getip() == nil then
       disp:drawStr(10, 50, "not connected ...")
     else
