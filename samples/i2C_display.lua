@@ -2,10 +2,6 @@
 -- requires nodeMCU with (float) firmware options DHT, I2C, U8G2 ...
 -- jno 30/12/2018
 
-ledPin=3 -- connect LED for life sign to nodeMCU PIN3
-butPin=6 -- connect button to nodeMCU PIN3
-dhtPin=5 -- connect DHT data to nodeMCU PIN5 
-
 tempStr=""
 humiStr=""
 

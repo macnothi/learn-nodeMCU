@@ -1,4 +1,3 @@
-
 -- wifi Anmeldung und event handling   
 -- connect to Access Point (DO NOT save config to flash)
 sta_cfg={}
@@ -17,6 +16,7 @@ wifi.eventmon.register(wifi.eventmon.STA_CONNECTED, function(T)
 
 wifi.eventmon.register(wifi.eventmon.STA_DISCONNECTED, function(T)
     print("\n\tSTA - DISCONNECTED".."\n\tSSID: "..T.SSID.."\n\tBSSID: "..T.BSSID.."\n\treason: "..T.reason)
+    print(T)
     end)
    
 wifi.eventmon.register(wifi.eventmon.STA_AUTHMODE_CHANGE, function(T)
