@@ -1,6 +1,5 @@
 -- global variables
-dataCycle = 5000 -- read data cycle 5000ms
-dispCycle = 200  -- dsplay update cycle 200ms
+dataCycle = 10000 -- read data cycle 10000ms
 temperature = 0.0
 humidity = 0.0
 dataError = 0
@@ -18,13 +17,18 @@ function updateData()
         temperature = temp
         humidity = humi
         -- push value to broker ... (only when changed?)
-        --publish(mqttClient)
+        if mqttIsConnected then
+            publish(mqttClient)
+        end
+
     elseif status == dht.ERROR_TIMEOUT then
         dataError = 1
         errMsg = "DHT22 time out error"
+
     elseif status == dht.ERROR_CHECKSUM then
         dataError = 1
-        errMsg = "DHT22 checksum error"       
+        errMsg = "DHT22 checksum error"     
+          
     end
    
     -- update display data 
