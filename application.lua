@@ -1,5 +1,6 @@
 -- global variables
-dataCycle = 10000 -- read data cycle 10000ms
+dataCycle = 60000 -- read data cycle 60000ms
+firstCycle = 2000 -- delay first data cycle after system reset
 temperature = 0.0
 humidity = 0.0
 dataError = 0
@@ -63,10 +64,10 @@ function updateDisplay()
         disp:drawStr(10, 40, "LED (gn)  : AUS")
     end
 
-    if wifi.sta.getip() == nil then
-      disp:drawStr(10, 50, "not connected ...")
+    if mqttIsConnected == 0 then
+      disp:drawStr(10, 50, "MQTT      : offline")
     else
-      disp:drawStr(10, 50, string.format("IP : %s",wifi.sta.getip()))
+      disp:drawStr(10, 50, "MQTT      : online")
     end
   
     disp:sendBuffer()
@@ -96,6 +97,13 @@ tmrDataLoop:register(dataCycle, tmr.ALARM_SEMI, updateData)
 -- register trigger for button changes
 gpio.trig(butPin, "both" , trigButton)
 
--- initial data sampling and screen setup
-buttonPressed=gpio.read(butPin)
-updateData()
+-- seems we have to delay the first data sampling after reset,
+-- reason (guess) DHT22 system needs time to be ready,
+-- started to happen, after compiling the lua scripts :-)
+tmrFirstCycle = tmr.create()
+tmrFirstCycle:register(firstCycle, tmr.ALARM_SINGLE, function()
+        -- initial data sampling and screen setup
+        buttonPressed=gpio.read(butPin)
+        updateData()
+    end)
+tmrFirstCycle:start()

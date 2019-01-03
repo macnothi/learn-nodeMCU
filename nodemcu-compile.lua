@@ -16,7 +16,8 @@ local compileAndRemoveIfNeeded = function(f)
    'application.lua',
    'hw_setup.lua',
    'i2c_setup.lua',
-   'mqttclient.lua',
+   'mqtt_client.lua',
+   'wifi_setup.lua'
  }
  -- work off the list ...
  for i, f in ipairs(luaFiles) do compileAndRemoveIfNeeded(f) end

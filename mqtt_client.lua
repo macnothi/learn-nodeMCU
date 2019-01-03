@@ -53,9 +53,11 @@ function subscribe(mq_client)
     function(client)
         print("connected")
         -- subscribe topic with qos = 0
-        client:subscribe(sub_greenled, 0, function(client) print("subscribe success") end)
-        -- publish data
-        -- publish(mq_client)
+        client:subscribe(sub_greenled, 0, function(client) 
+            print("subscribe success") 
+            mqttIsConnected = 1
+            updateDisplay()   
+          end)
     end,
     function(client, reason)
       print("failed reason: " .. reason)
@@ -71,4 +73,4 @@ function publish(mq_client)
     
 end
 
-subscribe(mqttClient)
+--subscribe(mqttClient)
