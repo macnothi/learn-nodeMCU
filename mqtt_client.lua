@@ -24,10 +24,12 @@ mqttClient:lwt("/lwt", "offline", 0, 0)
 mqttClient:on("connect", function(client) 
       print ("mqtt client connected") 
       mqttIsConnected = 1
+      tmrReconnectMQTT:stop()
     end)
 mqttClient:on("offline", function(client) 
       print ("client offline")
       mqttIsConnected = 0
+      tmrReconnectMQTT:start() -- try to reconnect
     end)
 
 -- on message receive event
@@ -56,6 +58,7 @@ function subscribe(mq_client)
         client:subscribe(sub_greenled, 0, function(client) 
             print("subscribe success") 
             mqttIsConnected = 1
+            tmrReconnectMQTT:stop()
             updateDisplay()   
           end)
     end,
@@ -73,4 +76,12 @@ function publish(mq_client)
     
 end
 
---subscribe(mqttClient)
+-- delay start of mqtt client (seems needed after using .lc files)
+tmrStartMQTT = tmr.create()
+tmrStartMQTT:register(1000, tmr.ALARM_SEMI, function() subscribe(mqttClient) end)
+
+-- try to reconnect after client went offline
+tmrReconnectMQTT = tmr.create()
+tmrReconnectMQTT:register(10000, tmr.ALARM_AUTO, function() subscribe(mqttClient) end)
+
+-- EOF
