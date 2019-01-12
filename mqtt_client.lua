@@ -6,7 +6,8 @@ server          = "io.adafruit.com"
 port            = 1883
 pub_humidity    = "macnothi/f/nodemcu.humidity"
 pub_temperature = "macnothi/f/nodemcu.temperature"
-sub_greenled    = "macnothi/f/nodemcu.greenled"
+sub_greenledSta = "macnothi/f/nodemcu.greenled"
+sub_greenledCom = "macnothi/f/nodemcu.green-led-command"
 aio_username    = "macnothi"
 aio_key         = "fb834016e230436687e6bbda5340a2b2"
 client_id       = "04ada60b-03fa-4779-a6ec-0ba7b1a85f49" -- did fail with simple client_id ...
@@ -46,11 +47,13 @@ mqttClient:on("message", function(client, topic, data)
     print("received : ", data)
   end
   --]]
-  if topic == sub_greenled then
+  if topic == sub_greenledCom then
     if data == "0" then
       gpio.write(webPin, gpio.LOW)
+      client:publish(sub_greenledSta, "0" , 0, 0)
     elseif data == "1" then
       gpio.write(webPin, gpio.HIGH)
+      client:publish(sub_greenledSta, "1" , 0, 0)
     end
   end
   updateDisplay()
@@ -63,7 +66,7 @@ function subscribe(mq_client)
       mqttIsConnected = 1
       tmrReconnectMQTT:stop()
       -- subscribe topic with qos = 0
-      client:subscribe(sub_greenled, 0, function(client) print("MQTT subscribe success") end)
+      client:subscribe(sub_greenledCom, 0, function(client) print("MQTT subscribe success") end)
       publish(client)
       updateDisplay()
     end,

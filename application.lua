@@ -17,7 +17,7 @@ function updateData()
         -- this only works with float firmware ...
         temperature = temp
         humidity = humi
-        -- push value to broker ... (only when changed?)
+        -- push new values to broker ... (only when changed?)
         if mqttIsConnected == 1 then
             publish(mqttClient)
         end
