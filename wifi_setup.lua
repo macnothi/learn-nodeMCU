@@ -8,10 +8,6 @@ wifi.sta.config(sta_cfg)
 -- connect to AP
 wifi.sta.autoconnect(1)
 
--- delay start of mqtt client (seems needed after using .lc files)
-tmrStartMQTT = tmr.create()
-tmrStartMQTT:register(3000, tmr.ALARM_SINGLE, function() subscribe(mqttClient) end)
-
 -- register wifi events
 wifi.eventmon.register(wifi.eventmon.STA_DISCONNECTED, function(T)
     print("\n\tSTA - DISCONNECTED".."\n\tSSID: "..T.SSID.."\n\tBSSID: "..T.BSSID.."\n\treason: "..T.reason)
