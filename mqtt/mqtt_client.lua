@@ -4,15 +4,14 @@
 -- adafruit server details
 server          = "io.adafruit.com"
 port            = 1883
-pub_humidity    = "macnothi/f/nodemcu.humidity"
-pub_temperature = "macnothi/f/nodemcu.temperature"
-sub_greenled    = "macnothi/f/nodemcu.greenled"
+pub_testfeed    = "macnothi/feeds/testfeed"
 aio_username    = "macnothi"
 aio_key         = "fb834016e230436687e6bbda5340a2b2"
-client_id       = "04ada60b-03fa-4779-a6ec-0ba7b1a85f49" -- did fail with simple client_id ...
+client_id       = "04ada60b-03fa-4779-a6ec-0ba7b1a85f49"
 
 -- mqtt client status
 mqttIsConnected = 0
+mqttCounter = 0
 
 -- init mqtt client with logins, keepalive timer 120s
 mqttClient = mqtt.Client(client_id, 120, aio_username, aio_key)
@@ -22,11 +21,10 @@ mqttClient = mqtt.Client(client_id, 120, aio_username, aio_key)
 mqttClient:lwt("/lwt", "offline", 0, 0)
 
 --[
--- I never saw the "connect" callback ?
 mqttClient:on("connect", function(client) 
       print ("mqtt client connected") 
       mqttIsConnected = 1
-    end)
+      end)
 --]]
 
 --[
@@ -39,44 +37,29 @@ mqttClient:on("offline", function(client)
 -- on message receive event
 mqttClient:on("message", function(client, topic, data) 
    --[
-  print("MQTT message from " .. topic .. " : " ) 
+  print(topic .. " : " ) 
   if data ~= nil then
     print("received : ", data)
   end
   --]]
-  if topic == sub_greenled then
-    if data == "0" then
-      gpio.write(webPin, gpio.LOW)
-    elseif data == "1" then
-      gpio.write(webPin, gpio.HIGH)
-    end
-  end
-  updateDisplay()
 end)
 
 function subscribe(mq_client)
-  mq_client:connect(server, port, 0, 0,
+    mq_client:connect(server, port, 0, 0,
     function(client)
-      print("MQTT connected to broker")
-      mqttIsConnected = 1
-      -- subscribe topic with qos = 0
-      client:subscribe(sub_greenled, 0, function(client) print("MQTT subscribe success") end)
-      publish(client)
-      updateDisplay()
+        print("connected")
     end,
     function(client, reason)
-      print("MQTT connect failed reason: " .. reason)
+      print("failed reason: " .. reason)
       mqttIsConnected = 0
-      updateDisplay()
     end)
 end
 
 function publish(mq_client)
+    mqttCounter = mqttCounter +1
     -- publish a message with data, QoS = 0, retain = 0
-    mq_client:publish(pub_humidity, string.format("%.1f",humidity), 0, 0)
-    -- publish a message with data, QoS = 0, retain = 0
-    mq_client:publish(pub_temperature, string.format("%.1f",temperature), 0, 0)
-    print("MQTT data published") 
+    mq_client:publish(pub_testfeed, mqttCounter, 0, 0)
+    print("data published") 
 end
 
 --subscribe(mqttClient)

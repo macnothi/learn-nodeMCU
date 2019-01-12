@@ -1,5 +1,5 @@
 -- global variables
-dataCycle = 60000 -- read data cycle 60000ms
+dataCycle = 30000 -- read data cycle 60000ms
 firstCycle = 2000 -- delay first data cycle after system reset
 temperature = 0.0
 humidity = 0.0
@@ -18,7 +18,7 @@ function updateData()
         temperature = temp
         humidity = humi
         -- push value to broker ... (only when changed?)
-        if mqttIsConnected then
+        if mqttIsConnected == 1 then
             publish(mqttClient)
         end
 
