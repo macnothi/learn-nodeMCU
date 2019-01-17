@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NodeMCU setup</title>
+  </head>
+  <body>
+   <header>
+      <h1>NodeMCU Setup</h1>
+   </header>
+        <main>
+            <form method="post">
+            <fieldset>
+             <legend>WIFI</legend>
+            <p>
+              <label for="ssid">SSID</label>
+              <input id="ssid" size=32>
+            </p>
+            <p>
+               <label for="pwd">PWD</label>
+               <input id="pwd" size=32 type="password">
+            </p>
+            </fieldset>
+            <fieldset>
+               <legend>MQTT</legend>
+               <p>
+                  <label for="temp">Temp</label>
+                  <input id="temp" size=32 value="macnothi/f/nodemcu.temperature">
+               </p>
+               <p>
+                  <label for="humi">Humi</label>
+                  <input id="humi" size=32 value="macnothi/f/nodemcu.humidity">
+               </p>
+            </fieldset>
+            <p><button type="submit">Submit</button></p>
+            </form>
+        </main>
+      <footer>
+         <p>© 2019 by macnothi</p>
+      </footer>
+  </body>
+</html>
