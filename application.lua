@@ -1,5 +1,5 @@
 -- global variables
-dataCycle = 30000 -- read data cycle 60000ms
+dataCycle = 30000 -- read data cycle 30000ms
 firstCycle = 2000 -- delay first data cycle after system reset
 temperature = 0.0
 humidity = 0.0
