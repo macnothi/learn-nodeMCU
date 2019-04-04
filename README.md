@@ -3,7 +3,7 @@
 Project goals
 
 Step 1
-- learn using nodeMCU (ESP8266 WiFi SoC) with Lua
+- learn using NodeMCU (ESP8266 WiFi SoC) with Lua
 - Use NodeMCU to read sensor data (temperature, humidity) 
 - Visualization of sensor data on I2C bus display
 - connect NodeMCU to local wifi (station mode)
