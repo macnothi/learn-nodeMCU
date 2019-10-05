@@ -1,7 +1,7 @@
 -- wifi configuration   
 sta_cfg={}
 sta_cfg.ssid="STICK"
-sta_cfg.pwd="Ich wohne in der Eisenbahnstrasse 59"
+sta_cfg.pwd="????"
 sta_cfg.save=false
 wifi.sta.config(sta_cfg)
 

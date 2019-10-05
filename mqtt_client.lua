@@ -8,6 +8,7 @@ pub_humidity    = "macnothi/f/nodemcu.humidity"
 pub_temperature = "macnothi/f/nodemcu.temperature"
 sub_greenledSta = "macnothi/f/nodemcu.greenled"
 sub_greenledCom = "macnothi/f/nodemcu.green-led-command"
+pub_redledSta   = "macnothi/f/nodemcu.redled"
 aio_username    = "macnothi"
 aio_key         = "fb834016e230436687e6bbda5340a2b2"
 client_id       = "04ada60b-03fa-4779-a6ec-0ba7b1a85f49" -- did fail with simple client_id ...
